@@ -2,7 +2,7 @@ import * as React from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { ArrowLeft, ArrowRight, Check, Loader2 } from "lucide-react";
-import mkrLogo from "@/mkr-logo.webp";
+import vitaziaLogo from "@/vitazia-logo.jpg";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -45,7 +45,6 @@ const COMPLAINTS = [
   "constipation",
   "headaches",
   "low focus",
-  "other",
 ];
 
 const GOALS: { value: string; label: string }[] = [
@@ -333,6 +332,7 @@ export function IntakeWizard() {
                   ]}
                   value={state.maritalStatus}
                   onChange={(v) => set("maritalStatus", v)}
+                  allowOther
                 />
               </div>
               <div>
@@ -346,6 +346,7 @@ export function IntakeWizard() {
                   ]}
                   value={state.childrenCount}
                   onChange={(v) => set("childrenCount", v)}
+                  allowOther
                 />
               </div>
             </>
@@ -368,10 +369,10 @@ export function IntakeWizard() {
                     { value: "parent", label: "Parent" },
                     { value: "grandparent", label: "Grandparent" },
                     { value: "legal_guardian", label: "Legal guardian" },
-                    { value: "other", label: "Other" },
                   ]}
                   value={state.guardianRelationship}
                   onChange={(v) => set("guardianRelationship", v)}
+                  allowOther
                 />
               </div>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -508,6 +509,7 @@ export function IntakeWizard() {
           options={GOALS}
           value={state.primaryGoal}
           onChange={(v) => set("primaryGoal", v as string)}
+          allowOther
         />
       ),
       validate: () => (state.primaryGoal ? null : "Pick a primary goal"),
@@ -523,6 +525,7 @@ export function IntakeWizard() {
           onChange={(v) => set("chiefComplaints", v as string[])}
           multi
           max={3}
+          allowOther
         />
       ),
       validate: () =>
@@ -591,6 +594,7 @@ export function IntakeWizard() {
               ]}
               value={state.waterIntake}
               onChange={(v) => set("waterIntake", v)}
+              allowOther
             />
           </div>
           <div>
@@ -605,6 +609,7 @@ export function IntakeWizard() {
               ]}
               value={state.activityLevel}
               onChange={(v) => set("activityLevel", v)}
+              allowOther
             />
           </div>
           <div>
@@ -705,13 +710,13 @@ export function IntakeWizard() {
       {/* Top progress strip */}
       <header className="sticky top-0 z-10 border-b bg-card/95 shadow-sm backdrop-blur">
         <div className="mx-auto max-w-2xl px-4 pt-3 pb-3">
-          {/* MKR Clinic branding */}
+          {/* Vitazia Wellness branding */}
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <img src={mkrLogo} alt="MKR Clinic" className="h-8 w-auto object-contain" />
+              <img src={vitaziaLogo} alt="Vitazia Wellness" className="h-8 w-auto object-contain" />
               <div className="leading-none">
-                <p className="text-xs font-semibold text-foreground">MKR Clinic</p>
-                <p className="text-[10px] text-muted-foreground">Dr. Malika Kabra Rathi</p>
+                <p className="text-xs font-semibold text-foreground">Vitazia Wellness</p>
+                <p className="text-[10px] text-muted-foreground">Dt. Shweta Nagar</p>
               </div>
             </div>
             <span className="text-xs text-muted-foreground">
@@ -865,6 +870,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.medicalHistory}
           onChange={(v) => set("medicalHistory", v as string[])}
           multi
+          allowOther
         />
         <div>
           <Label htmlFor="allergies">Allergies / intolerances</Label>
@@ -896,6 +902,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.familyHistory}
           onChange={(v) => set("familyHistory", v as string[])}
           multi
+          allowOther
         />
       </Section>
 
@@ -920,6 +927,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.bloodGroup}
             onChange={(v) => set("bloodGroup", v)}
+            allowOther
           />
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -1065,6 +1073,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.bowelFrequency}
             onChange={(v) => set("bowelFrequency", v)}
+            allowOther
           />
         </div>
         <div>
@@ -1077,6 +1086,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             value={state.stoolConsistency}
             onChange={(v) => set("stoolConsistency", v as string[])}
             multi
+            allowOther
           />
         </div>
         <div>
@@ -1089,6 +1099,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             value={state.bloatingTiming}
             onChange={(v) => set("bloatingTiming", v as string[])}
             multi
+            allowOther
           />
         </div>
         <div>
@@ -1100,6 +1111,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             value={state.acidityTriggers}
             onChange={(v) => set("acidityTriggers", v as string[])}
             multi
+            allowOther
           />
         </div>
         <div>
@@ -1112,6 +1124,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             value={state.digestiveSymptoms}
             onChange={(v) => set("digestiveSymptoms", v as string[])}
             multi
+            allowOther
           />
         </div>
         <div>
@@ -1124,6 +1137,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.lunchDuration}
             onChange={(v) => set("lunchDuration", v)}
+            allowOther
           />
         </div>
         <div>
@@ -1137,6 +1151,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             value={state.dailyRituals}
             onChange={(v) => set("dailyRituals", v as string[])}
             multi
+            allowOther
           />
         </div>
       </Section>
@@ -1155,6 +1170,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.dietType}
             onChange={(v) => set("dietType", v)}
+            allowOther
           />
         </div>
         <div>
@@ -1210,6 +1226,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.packagedFoodFrequency}
             onChange={(v) => set("packagedFoodFrequency", v)}
+            allowOther
           />
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -1231,6 +1248,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
               ]}
               value={state.energyCarbonatedDrinks}
               onChange={(v) => set("energyCarbonatedDrinks", v)}
+              allowOther
             />
           </div>
           <div>
@@ -1263,6 +1281,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.homeCooked}
             onChange={(v) => set("homeCooked", v)}
+            allowOther
           />
         </div>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -1277,6 +1296,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
               ]}
               value={state.whoCooks}
               onChange={(v) => set("whoCooks", v)}
+              allowOther
             />
           </div>
           <div>
@@ -1332,6 +1352,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.eatingSpeed}
             onChange={(v) => set("eatingSpeed", v)}
+            allowOther
           />
         </div>
         <div>
@@ -1344,6 +1365,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.bingeEating}
             onChange={(v) => set("bingeEating", v)}
+            allowOther
           />
         </div>
         <div>
@@ -1377,6 +1399,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
             value={state.bloodParameters}
             onChange={(v) => set("bloodParameters", v as string[])}
             multi
+            allowOther
           />
         </div>
         <div>
@@ -1432,6 +1455,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
                 ]}
                 value={state.exerciseDuration}
                 onChange={(v) => set("exerciseDuration", v)}
+                allowOther
               />
             </div>
           </div>
@@ -1456,6 +1480,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
               ]}
               value={state.exerciseFrequency}
               onChange={(v) => set("exerciseFrequency", v)}
+              allowOther
             />
           </div>
           <div>
@@ -1474,6 +1499,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
               ]}
               value={state.stressSource}
               onChange={(v) => set("stressSource", v)}
+              allowOther
             />
           </div>
           <div>
@@ -1504,6 +1530,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
                     ]}
                     value={state.alcoholFreq as "occasionally" | "1-2x/week" | "3-5x/week" | "daily" | undefined}
                     onChange={(v) => set("alcoholFreq", v)}
+                    allowOther
                   />
                 </div>
                 <div>
@@ -1517,6 +1544,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
                     ]}
                     value={state.alcoholDrinksPerSession as "1-2 drinks" | "3-4 drinks" | "5-6 drinks" | "7+ drinks" | undefined}
                     onChange={(v) => set("alcoholDrinksPerSession", v)}
+                    allowOther
                   />
                 </div>
               </div>
@@ -1537,6 +1565,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
                 ]}
                 value={state.travelFrequency}
                 onChange={(v) => set("travelFrequency", v)}
+                allowOther
               />
             </div>
           </div>
@@ -1551,6 +1580,7 @@ function OptionalSections({ state, set }: { state: WizardState; set: SetFn }) {
               value={state.wellnessRituals}
               onChange={(v) => set("wellnessRituals", v as string[])}
               multi
+              allowOther
             />
           </div>
         </Section>
@@ -1778,11 +1808,11 @@ function OncologyStepContent({ state, set }: { state: WizardState; set: SetFn })
             { value: "immunotherapy", label: "Immunotherapy" },
             { value: "surgery", label: "Surgery" },
             { value: "bone_marrow_transplant", label: "Bone marrow transplant" },
-            { value: "other", label: "Other" },
           ]}
           value={state.cancerTreatment}
           onChange={(v) => set("cancerTreatment", v as string[])}
           multi
+          allowOther
         />
       </div>
       <div>
@@ -1816,6 +1846,7 @@ function OncologyStepContent({ state, set }: { state: WizardState; set: SetFn })
           value={state.treatmentSymptoms}
           onChange={(v) => set("treatmentSymptoms", v as string[])}
           multi
+          allowOther
         />
       </div>
       <div>
@@ -1877,6 +1908,7 @@ function OncologyStepContent({ state, set }: { state: WizardState; set: SetFn })
           value={state.foodSafetyConcerns}
           onChange={(v) => set("foodSafetyConcerns", v as string[])}
           multi
+          allowOther
         />
       </div>
     </div>
@@ -1897,6 +1929,7 @@ function FertilityStepContent({ state, set }: { state: WizardState; set: SetFn }
           ]}
           value={state.fertilityTryingDuration}
           onChange={(v) => set("fertilityTryingDuration", v)}
+          allowOther
         />
       </div>
       <div>
@@ -1906,10 +1939,10 @@ function FertilityStepContent({ state, set }: { state: WizardState; set: SetFn }
             { value: "none", label: "None" },
             { value: "iui", label: "IUI" },
             { value: "ivf", label: "IVF" },
-            { value: "other", label: "Other" },
           ]}
           value={state.fertilityTreatment}
           onChange={(v) => set("fertilityTreatment", v)}
+          allowOther
         />
       </div>
       <div>
@@ -2006,6 +2039,7 @@ function PregnancyStepContent({ state, set }: { state: WizardState; set: SetFn }
           value={state.pregnancySymptoms}
           onChange={(v) => set("pregnancySymptoms", v as string[])}
           multi
+          allowOther
         />
       </div>
     </div>
@@ -2050,6 +2084,7 @@ function FemaleSection({ state, set }: { state: WizardState; set: SetFn }) {
           ]}
           value={state.periodsStatus}
           onChange={(v) => set("periodsStatus", v)}
+          allowOther
         />
       </div>
       <div>
@@ -2094,6 +2129,7 @@ function FemaleSection({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.flow}
           onChange={(v) => set("flow", v as string[])}
           multi
+          allowOther
         />
       </div>
       <div>
@@ -2111,6 +2147,7 @@ function FemaleSection({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.pmsSymptoms}
           onChange={(v) => set("pmsSymptoms", v as string[])}
           multi
+          allowOther
         />
       </div>
       <div>
@@ -2145,6 +2182,7 @@ function FemaleSection({ state, set }: { state: WizardState; set: SetFn }) {
               value={state.hormonalTypes}
               onChange={(v) => set("hormonalTypes", v as string[])}
               multi
+              allowOther
             />
           </div>
         ) : null}
@@ -2160,6 +2198,7 @@ function FemaleSection({ state, set }: { state: WizardState; set: SetFn }) {
             ]}
             value={state.trimester}
             onChange={(v) => set("trimester", v)}
+            allowOther
           />
         </div>
       ) : null}
@@ -2190,6 +2229,7 @@ function FemaleSection({ state, set }: { state: WizardState; set: SetFn }) {
                 ]}
                 value={state.menopauseType}
                 onChange={(v) => set("menopauseType", v)}
+                allowOther
               />
             </div>
           </div>
@@ -2216,6 +2256,7 @@ function MaleSection({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.urinarySymptoms}
           onChange={(v) => set("urinarySymptoms", v as string[])}
           multi
+          allowOther
         />
       </div>
       <div>
@@ -2241,6 +2282,7 @@ function MaleSection({ state, set }: { state: WizardState; set: SetFn }) {
           ]}
           value={state.testosteroneStatus}
           onChange={(v) => set("testosteroneStatus", v)}
+          allowOther
         />
       </div>
       <div>
@@ -2257,6 +2299,7 @@ function MaleSection({ state, set }: { state: WizardState; set: SetFn }) {
           ]}
           value={state.steroidStatus}
           onChange={(v) => set("steroidStatus", v)}
+          allowOther
         />
       </div>
       <div>
@@ -2418,6 +2461,7 @@ function ChildSection({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.feedingConcerns}
           onChange={(v) => set("feedingConcerns", v as string[])}
           multi
+          allowOther
         />
       </div>
       <div>
@@ -2432,6 +2476,7 @@ function ChildSection({ state, set }: { state: WizardState; set: SetFn }) {
           ]}
           value={state.appetite}
           onChange={(v) => set("appetite", v)}
+          allowOther
         />
       </div>
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -2466,6 +2511,7 @@ function ChildSection({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.sportsTiming}
           onChange={(v) => set("sportsTiming", v as string[])}
           multi
+          allowOther
         />
       </div>
       <div>
@@ -2511,6 +2557,7 @@ function ChildSection({ state, set }: { state: WizardState; set: SetFn }) {
           ]}
           value={state.childPackagedFoodFrequency}
           onChange={(v) => set("childPackagedFoodFrequency", v)}
+          allowOther
         />
       </div>
       <div>
@@ -2533,6 +2580,7 @@ function ChildSection({ state, set }: { state: WizardState; set: SetFn }) {
           value={state.growthConcerns}
           onChange={(v) => set("growthConcerns", v as string[])}
           multi
+          allowOther
         />
       </div>
     </Section>

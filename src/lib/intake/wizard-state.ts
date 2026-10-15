@@ -2,6 +2,11 @@ import type { SubmissionInput } from "@/lib/intake/schema";
 
 export type WizardBranch = "female" | "male" | "child";
 
+// A field backed by a fixed set of options that also has an "Other"
+// free-text affordance in the UI keeps autocomplete for the known values
+// but accepts arbitrary typed text too.
+type Loose<T extends string> = T | (string & {});
+
 export type WizardState = {
   // step 0
   branch?: WizardBranch;
@@ -16,8 +21,8 @@ export type WizardState = {
   phone?: string;
   email?: string;
   profession?: string;
-  maritalStatus?: "single" | "married" | "divorced" | "widowed";
-  childrenCount?: "none" | "1" | "2" | "3+";
+  maritalStatus?: Loose<"single" | "married" | "divorced" | "widowed">;
+  childrenCount?: Loose<"none" | "1" | "2" | "3+">;
   referredBy?: string;
   // child guardian
   guardianName?: string;
@@ -32,8 +37,8 @@ export type WizardState = {
   weightKg?: number;
   heightCm?: number;
   sleepHours?: number;
-  waterIntake?: "<1L" | "1-2L" | "2-3L" | "3L+";
-  activityLevel?: "sedentary" | "light" | "moderate" | "active" | "very_active";
+  waterIntake?: Loose<"<1L" | "1-2L" | "2-3L" | "3L+">;
+  activityLevel?: Loose<"sedentary" | "light" | "moderate" | "active" | "very_active">;
   screenTimeHrs?: number;
   // symptom ratings (required — all 6)
   rSleep?: number;
@@ -63,7 +68,7 @@ export type WizardState = {
   tubeFeeding?: boolean;
   foodSafetyConcerns: string[];
   // body measurements & vitals
-  bloodGroup?: "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-" | "unknown";
+  bloodGroup?: Loose<"A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-" | "unknown">;
   targetWeightKg?: number;
   waistNavelCm?: number;
   waistThinnestCm?: number;
@@ -85,28 +90,28 @@ export type WizardState = {
   bloatingRating?: number;
   constipationRating?: number;
   dailyRituals: string[];
-  lunchDuration?: "under_10" | "10_20" | "over_20";
+  lunchDuration?: Loose<"under_10" | "10_20" | "over_20">;
   // blood / inflammation
   bloodParameters: string[];
   inflammationConcerns?: boolean;
   // food pattern
-  dietType?: "veg" | "non_veg" | "eggetarian" | "vegan" | "jain" | "pescatarian";
+  dietType?: Loose<"veg" | "non_veg" | "eggetarian" | "vegan" | "jain" | "pescatarian">;
   cuisines: string[];
   mealsPerDay?: number;
   eatsOutPerWeek?: number;
-  packagedFoodFrequency?: "rarely" | "1-2_wk" | "3-5_wk" | "daily" | "multi_daily";
+  packagedFoodFrequency?: Loose<"rarely" | "1-2_wk" | "3-5_wk" | "daily" | "multi_daily">;
   sugarDrinks?: boolean;
-  energyCarbonatedDrinks?: "never" | "rarely" | "sometimes" | "daily";
+  energyCarbonatedDrinks?: Loose<"never" | "rarely" | "sometimes" | "daily">;
   teaCoffeePerDay?: number;
   teaCoffeeFirstCupTime?: string;
-  homeCooked?: "yes" | "partially" | "rarely";
-  whoCooks?: "self" | "family" | "cook_help" | "mix";
+  homeCooked?: Loose<"yes" | "partially" | "rarely">;
+  whoCooks?: Loose<"self" | "family" | "cook_help" | "mix">;
   cookingOil?: string;
   foodLikes?: string;
   foodDislikes?: string;
   cravings?: string;
-  eatingSpeed?: "slow" | "moderate" | "fast";
-  bingeEating?: "no" | "occasionally" | "frequently";
+  eatingSpeed?: Loose<"slow" | "moderate" | "fast">;
+  bingeEating?: Loose<"no" | "occasionally" | "frequently">;
   dailyMeals: {
     breakfast: { time?: string; items: string[] };
     midMorning: { time?: string; items: string[] };
@@ -117,7 +122,7 @@ export type WizardState = {
   };
   // lifestyle depth (adults)
   stress?: number;
-  stressSource?: "work" | "family" | "health" | "financial" | "multiple";
+  stressSource?: Loose<"work" | "family" | "health" | "financial" | "multiple">;
   smokingActive?: boolean;
   smokingFreq?: string;
   alcoholActive?: boolean;
@@ -129,8 +134,8 @@ export type WizardState = {
   wakeTime?: string;
   dailySteps?: number;
   exerciseType?: string;
-  exerciseDuration?: "none" | "15_30" | "30_45" | "45_60" | "60_plus";
-  exerciseFrequency?: "daily" | "4_5_wk" | "2_3_wk" | "rarely";
+  exerciseDuration?: Loose<"none" | "15_30" | "30_45" | "45_60" | "60_plus">;
+  exerciseFrequency?: Loose<"daily" | "4_5_wk" | "2_3_wk" | "rarely">;
   wellnessRituals: string[];
   notes?: string;
   // goals & expectations
@@ -139,22 +144,23 @@ export type WizardState = {
   biggestChallenge?: string;
   programExpectations?: string;
   // female
-  periodsStatus?: "regular" | "irregular" | "absent" | "menopausal";
+  periodsStatus?: Loose<"regular" | "irregular" | "absent" | "menopausal">;
   lastPeriodDate?: string;
   cycleLengthDays?: number;
   flow: string[];
   periodDays?: number;
   pmsSymptoms: string[];
-  fertilityTryingDuration?: "under_6mo" | "6_12mo" | "1_2yr" | "2yr_plus";
-  fertilityTreatment?: "none" | "iui" | "ivf" | "other";
+  fertilityTryingDuration?: Loose<"under_6mo" | "6_12mo" | "1_2yr" | "2yr_plus">;
+  fertilityTreatment?: Loose<"none" | "iui" | "ivf" | "other">;
   fertilityConditions?: string;
   painSeverity?: number;
   periodPainMeds?: boolean;
   endometriosisSurgery?: boolean;
   hormonalActive?: boolean;
   hormonalTypes: string[];
+  // drives step branching (fertility/pregnancy/lactation steps) — kept strict, no "Other"
   pregnancyStatus?: "none" | "trying" | "pregnant" | "lactating";
-  trimester?: "first" | "second" | "third";
+  trimester?: Loose<"first" | "second" | "third">;
   dueDate?: string;
   prePregnancyWeightKg?: number;
   gestationalDiabetes?: boolean;
@@ -167,15 +173,15 @@ export type WizardState = {
   formulaSupplementing?: boolean;
   menopauseReached?: boolean;
   menopauseAgeAt?: number;
-  menopauseType?: "natural" | "induced_surgical" | "induced_medical";
+  menopauseType?: Loose<"natural" | "induced_surgical" | "induced_medical">;
   hysterectomy?: boolean;
   // male
   urinarySymptoms: string[];
   libido?: number;
   erectileConcerns?: boolean;
-  testosteroneStatus?: "not_tested" | "normal" | "low" | "high" | "unsure";
+  testosteroneStatus?: Loose<"not_tested" | "normal" | "low" | "high" | "unsure">;
   trtUse?: boolean;
-  steroidStatus?: "never" | "past" | "current";
+  steroidStatus?: Loose<"never" | "past" | "current">;
   prostateConcerns?: boolean;
   // child
   birthWeightKg?: number;
@@ -193,13 +199,13 @@ export type WizardState = {
   attentionSpan?: number;
   memory?: number;
   focus?: number;
-  appetite?: "poor" | "variable" | "good" | "very_good" | "excessive";
+  appetite?: Loose<"poor" | "variable" | "good" | "very_good" | "excessive">;
   pickyEater?: number;
   sportsPerWeek?: number;
   sportsTiming: string[];
   outdoorSports: string[];
   indoorSports: string[];
-  childPackagedFoodFrequency?: "rarely" | "1-2_wk" | "3-5_wk" | "daily" | "multi_daily";
+  childPackagedFoodFrequency?: Loose<"rarely" | "1-2_wk" | "3-5_wk" | "daily" | "multi_daily">;
   growthConcerns: string[];
   feedingConcerns: string[];
 };

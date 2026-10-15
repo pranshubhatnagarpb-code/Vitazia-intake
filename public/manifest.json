@@ -1,16 +1,16 @@
 {
-  "name": "MKR Clinic - Client Intake Form",
-  "short_name": "MKR Clinic",
-  "description": "Personalised nutrition intake by Dr. Malika Kabra Rathi.",
+  "name": "Vitazia Wellness - Client Intake Form",
+  "short_name": "Vitazia Wellness",
+  "description": "Personalised nutrition intake by Dt. Shweta Nagar.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "theme_color": "#116735",
   "icons": [
     {
-      "src": "/icon.svg",
+      "src": "/icon.jpg",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/jpeg",
       "purpose": "any maskable"
     }
   ]

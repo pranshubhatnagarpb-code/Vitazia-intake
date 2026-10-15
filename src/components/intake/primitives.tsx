@@ -67,18 +67,25 @@ export function ChipGroup<T extends string>({
     multi && Array.isArray(value)
       ? (value as string[]).filter((v) => !predefinedValues.has(v as T))
       : [];
+  const isCustomSingle =
+    !multi && typeof value === "string" && value.length > 0 && !predefinedValues.has(value as T);
 
   const commitOther = () => {
     const trimmed = otherText.trim();
     if (!trimmed) { setShowInput(false); return; }
-    const arr = Array.isArray(value) ? [...(value as string[])] : [];
-    if (!arr.includes(trimmed)) arr.push(trimmed);
-    onChange(arr as T[]);
+    if (multi) {
+      const arr = Array.isArray(value) ? [...(value as string[])] : [];
+      if (!arr.includes(trimmed)) arr.push(trimmed);
+      onChange(arr as T[]);
+    } else {
+      onChange(trimmed as T);
+    }
     setOtherText("");
     setShowInput(false);
   };
 
-  const openInput = () => {
+  const openInput = (prefill?: string) => {
+    setOtherText(prefill ?? "");
     setShowInput(true);
     setTimeout(() => inputRef.current?.focus(), 0);
   };
@@ -95,10 +102,15 @@ export function ChipGroup<T extends string>({
           {v} ×
         </Chip>
       ))}
-      {allowOther && multi && !showInput && (
-        <Chip onClick={openInput}>+ Other</Chip>
+      {allowOther && !multi && isCustomSingle && !showInput && (
+        <Chip active onClick={() => openInput(value as string)}>
+          {value as string} ✎
+        </Chip>
       )}
-      {allowOther && multi && showInput && (
+      {allowOther && !showInput && (multi || !isCustomSingle) && (
+        <Chip onClick={() => openInput()}>+ Other</Chip>
+      )}
+      {allowOther && showInput && (
         <div className="flex items-center gap-1">
           <input
             ref={inputRef}
@@ -129,11 +141,35 @@ export function Segmented<T extends string>({
   options,
   value,
   onChange,
+  allowOther,
 }: {
   options: { value: T; label: string }[];
   value: T | undefined;
   onChange: (v: T) => void;
+  allowOther?: boolean;
 }) {
+  const [showInput, setShowInput] = React.useState(false);
+  const [otherText, setOtherText] = React.useState("");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  const predefinedValues = new Set(options.map((o) => o.value));
+  const isCustom =
+    !!allowOther && typeof value === "string" && value.length > 0 && !predefinedValues.has(value);
+
+  const openInput = (prefill?: string) => {
+    setOtherText(prefill ?? "");
+    setShowInput(true);
+    setTimeout(() => inputRef.current?.focus(), 0);
+  };
+
+  const commitOther = () => {
+    const trimmed = otherText.trim();
+    if (!trimmed) { setShowInput(false); return; }
+    onChange(trimmed as T);
+    setOtherText("");
+    setShowInput(false);
+  };
+
   return (
     <div className="inline-flex flex-wrap gap-2 rounded-2xl border bg-muted p-1">
       {options.map((o) => (
@@ -151,6 +187,47 @@ export function Segmented<T extends string>({
           {o.label}
         </button>
       ))}
+      {allowOther && isCustom && !showInput && (
+        <button
+          type="button"
+          onClick={() => openInput(value as string)}
+          className="min-h-10 shrink-0 rounded-xl bg-primary px-4 text-sm font-medium text-primary-foreground shadow-sm"
+        >
+          {value} ✎
+        </button>
+      )}
+      {allowOther && !isCustom && !showInput && (
+        <button
+          type="button"
+          onClick={() => openInput()}
+          className="min-h-10 shrink-0 rounded-xl px-4 text-sm font-medium text-muted-foreground hover:text-foreground"
+        >
+          Other
+        </button>
+      )}
+      {allowOther && showInput && (
+        <div className="flex items-center gap-1">
+          <input
+            ref={inputRef}
+            type="text"
+            value={otherText}
+            onChange={(e) => setOtherText(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") { e.preventDefault(); commitOther(); }
+              if (e.key === "Escape") { setShowInput(false); setOtherText(""); }
+            }}
+            placeholder="Type & press Enter"
+            className="min-h-9 rounded-xl border border-border bg-card px-3 py-1.5 text-sm font-medium outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+          />
+          <button
+            type="button"
+            onClick={commitOther}
+            className="min-h-9 rounded-xl border border-primary bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground"
+          >
+            Add
+          </button>
+        </div>
+      )}
     </div>
   );
 }
