@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
 
 const SITE_URL = "https://intake.vitaziawellness.com";
-const OG_IMAGE_URL = `${SITE_URL}/og-image.png`;
+const OG_IMAGE_URL = `${SITE_URL}/icon.jpg`;
 
 function NotFoundComponent() {
   return (
@@ -42,8 +42,8 @@ export const Route = createRootRoute({
       { property: "og:url", content: SITE_URL },
       { property: "og:site_name", content: "Vitazia Wellness" },
       { property: "og:image", content: OG_IMAGE_URL },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
+      { property: "og:image:width", content: "200" },
+      { property: "og:image:height", content: "200" },
       { property: "og:image:alt", content: "Vitazia Wellness - Client Intake Form" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Vitazia Wellness - Client Intake Form" },
